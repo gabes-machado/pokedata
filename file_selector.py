@@ -6,9 +6,9 @@ import numpy as np
 import statsmodels.api as sm
 import math
 
-# Criando a classe FileSelector
+# Criando a classe FileSelector que será a única classe do app
 class FileSelector:
-    def __init__(self): # Método construtor
+    def __init__(self): # Método de criação da UI 
         self.root = tk.Tk()
         self.root.title("Modelo de Previsão de Peso	- Pokémon")
         self.root.geometry("400x300")
@@ -28,7 +28,7 @@ class FileSelector:
         self.result_label = tk.Label(self.root, text="")
         self.result_label.pack()
 
-    def browse(self): # Método para procurar o arquivo
+    def browse(self): # Método para procurar o arquivo CSV
         self.filename = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("csv files", "*.csv"), ("all files", "*.*")))
         if self.filename.endswith(".csv"):
             self.df = pd.read_csv(self.filename)
@@ -37,7 +37,7 @@ class FileSelector:
             self.result_label.config(text="Por favor, selecione um arquivo CSV.")
             self.analyze_button.config(state="disable")
 
-    def analyze(self): # Método para realizar a análise
+    def analyze(self): # Método para realizar a análise de regressão
         self.result_label.config(text="Realizando análise...")
         name_type_height_weight_df = self.df[['english_name', 'primary_type', 'height_m', 'weight_kg']]
         grass_pokemon_filtering = np.where((name_type_height_weight_df['primary_type']=='grass'))
